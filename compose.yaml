@@ -1,6 +1,6 @@
 # vim: ft=yaml.docker-compose
 ---
-name: compose-template
+name: atuin
 
 include:
   - ext/docker-compose-snippets/tailscale-caddy.yaml
@@ -8,24 +8,27 @@ include:
   - ext/docker-compose-snippets/volume-backup-schedules.yaml
 
 services:
-  compose-template:
-    image: ghcr.io/rahulsalvi/compose-template:latest
-    environment:
-      DATA_DIR: /data
-      SERVICE_PORT: 8080
-    volumes:
-      - data:/data
+  atuin:
+    image: ghcr.io/rahulsalvi/atuin:latest
+    command: server start
     restart: unless-stopped
+    environment:
+      ATUIN_HOST: 127.0.0.1
+      ATUIN_PORT: 8080
+      ATUIN_OPEN_REGISTRATION: true
+      ATUIN_DB_URI: sqlite:///config/atuin.db
+    volumes:
+      - atuin-data:/config
     extends:
       file: ext/docker-compose-snippets/tailscale-app-base.yaml
       service: tailscale-app-base
 
   backup:
     volumes:
-      - data:/backup:ro
+      - atuin-data:/backup:ro
     extends:
       file: ext/docker-compose-snippets/volume-backup.yaml
       service: aws-backup-frequent
 
 volumes:
-  data:
+  atuin-data:
