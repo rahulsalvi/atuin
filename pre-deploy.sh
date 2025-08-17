@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APPNAME=compose-template
+APPNAME=atuin
 TS_TAGS=tag:webserver
 
 # return code
