@@ -10,7 +10,7 @@ include:
 services:
   atuin:
     image: ghcr.io/rahulsalvi/atuin:latest
-    command: server start
+    command: start
     restart: unless-stopped
     environment:
       ATUIN_HOST: 127.0.0.1
