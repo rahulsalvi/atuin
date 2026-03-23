@@ -1,4 +1,4 @@
-FROM ghcr.io/atuinsh/atuin:18.12.0
+FROM ghcr.io/atuinsh/atuin:v18.13.3
 
 USER root
 RUN mkdir -p /usr/local/share/ca-certificates
